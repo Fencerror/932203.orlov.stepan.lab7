@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Lab 7</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      .shape {
+        position: absolute;  
+        cursor: pointer;
+      }
+      .circle:hover {
+        background-color: #f1c40f; 
+      }
+      .square:hover {
+        background-color: #f1c40f; /* Меняем цвет фона при наведении */
+      }
+      .triangle:hover {
+        border-bottom-color: #f1c40f; 
+      }
+      .circle {
+        background-color: forestgreen;
+        border-radius: 50%;
+        border:1px solid black;
+      }
+      .square {
+        background-color: red;
+        border:1px solid black;
+      }
+      .triangle {
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border:1px solid black;
+        border-color: transparent transparent blue transparent; /* Цвет для перевернутого треугольника */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <input type="number" placeholder="Число фигур" min="1" id="main-input"></br>
+      <button onclick="CreateShapes('square')" type="button" class="square-button">Квадрат</button>
+      <button onclick="CreateShapes('triangle')" type="button" class="triangle-button">Треугольник</button>
+      <button onclick="CreateShapes('circle')" type="button" class="circle-button">Круг</button>
+
+      <script>
+        function CreateShapes(type) {
+          const count = parseInt(document.getElementById('main-input').value) || 0;
+
+          for (let i = 0; i < count; i++) {
+            const size = Math.floor(Math.random() * 100) + 20; // Размер от 20 до 120 пикселей
+            const x = Math.random() * (window.innerWidth - size);
+            const y = Math.random() * (window.innerHeight - size); // Случайные координаты местоположения фигуры.
+
+            const shape = document.createElement('div');
+            shape.className = `shape ${type}`;
+            shape.style.left = `${x}px`;
+            shape.style.top = `${y}px`;
+
+            if (type === 'circle' || type === 'square') {
+              shape.style.width = `${size}px`;
+              shape.style.height = `${size}px`;
+            } else if (type === 'triangle') {
+              shape.style.borderWidth = `0 ${size / 2}px ${size}px ${size / 2}px`;
+            }
+
+            shape.addEventListener('dblclick', () => {
+              shape.remove();
+            });
+
+            document.body.appendChild(shape);
+          }
+        }
+      </script>
+    </div>
+  </body>
+</html>
